@@ -31,7 +31,7 @@ function Particle(x, y, r, fixed, q) {
                     var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
                         distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
                         normal = Matter.Vector.normalise(bToA),
-                        magnitude = 0.1 * (bodyA.charge * bodyB.charge / distanceSq),
+                        magnitude = 0.05 * (bodyA.charge * bodyB.charge / distanceSq),
                         force = Matter.Vector.mult(normal, magnitude);
 
                     // Apply force to both bodies
