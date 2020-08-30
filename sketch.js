@@ -1,5 +1,6 @@
 Matter.use(
-    'matter-attractors' // PLUGIN_NAME
+    'matter-attractors', // PLUGIN_NAME
+    'matter-wrap',
 );
 
 // module aliases
@@ -9,6 +10,7 @@ var Engine = Matter.Engine,
     Bodies = Matter.Bodies,
     Constraint = Matter.Constraint,
     Mouse = Matter.Mouse,
+    Body = Matter.Body,
     MouseConstraint = Matter.MouseConstraint;
 
 var engine;
@@ -27,30 +29,36 @@ function setup() {
     // Engine.run(engine);
 
     var prev = null;
-    for (var x = 200; x < 400; x += 20) {
+    for (var x = 100; x < 450; x += 10) {
 
         var fixed = false;
-        if (!prev) {
-            fixed = true;
-        }
-        var p = new Particle(x, 100, 10, fixed, -1);
+        // if (!prev) {
+        //     fixed = true;
+        // }
+        var p = new Particle(x, 100, 5, fixed, -1);
         // var p2 = new Particle(200, 150, 10);
         particles.push(p);
 
-        if (prev) {
-            var option = {
-                bodyA: p.body,
-                bodyB: prev.body,
-                length: 20,
-                stiffness: 0.4,
-            }
-            var constraint = Constraint.create(option);
-            World.add(world, constraint);
-        }
+        // if (prev) {
+        //     var option = {
+        //         bodyA: p.body,
+        //         bodyB: prev.body,
+        //         length: 20,
+        //         stiffness: 0.4,
+        //     }
+        //     var constraint = Constraint.create(option);
+        //     World.add(world, constraint);
+        // }
         prev = p;
     }
+    particles.push(new Particle(250, 250, 20 , true, 4));
 
-    boundaries.push(new Boundary(200, height, width, 30, 0));
+    // disable attractor for boundaries :/
+    boundaries.push(new Boundary(250, height, width, 100, 0));
+    boundaries.push(new Boundary(0, height-250, width, 100, PI/2, 10));
+    boundaries.push(new Boundary(500, height-250, width, 100, -PI/2,10));
+    boundaries.push(new Boundary(250, height-500, width, 100, 0));
+
 
     var canvasmouse = Mouse.create(canvas.elt);
     canvasmouse.pixelRatio = pixelDensity();
