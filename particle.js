@@ -1,4 +1,5 @@
 function Particle(x, y, r, fixed, q) {
+    var TresholdDistance = 4000;
     var option = {
         friction: 0,
         frictionAir: 0.1,
@@ -30,8 +31,12 @@ function Particle(x, y, r, fixed, q) {
                 //     };
                     var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
                         distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
-                        normal = Matter.Vector.normalise(bToA),
-                        magnitude = 0.05 * (bodyA.charge * bodyB.charge / distanceSq),
+                        normal = Matter.Vector.normalise(bToA)
+                        if (distanceSq < TresholdDistance) {
+                            magnitude = 0.05 * (bodyA.charge * bodyB.charge / distanceSq)
+                        } else {
+                            magnitude = 0
+                        }
                         force = Matter.Vector.mult(normal, magnitude);
 
                     // Apply force to both bodies
