@@ -20,6 +20,10 @@ var boundaries = [];
 
 var ground;
 
+// Particles are already created with a specific force and threshold, I can't update it ;(
+var ThresholdDistance = 100;
+
+
 function setup() {
     var canvas = createCanvas(500, 500);
     engine = Engine.create();
@@ -34,23 +38,11 @@ function setup() {
         for (var x = 100; x < 300; x += 20) {
 
             var fixed = false;
-            // if (!prev) {
-            //     fixed = true;
-            // }
+
             var p = new Particle(x, y, 5, fixed, -1);
             // var p2 = new Particle(200, 150, 10);
             particles.push(p);
 
-            // if (prev) {
-            //     var option = {
-            //         bodyA: p.body,
-            //         bodyB: prev.body,
-            //         length: 20,
-            //         stiffness: 0.4,
-            //     }
-            //     var constraint = Constraint.create(option);
-            //     World.add(world, constraint);
-            // }
             prev = p;
         }
     }
@@ -66,6 +58,7 @@ function setup() {
 
     var canvasmouse = Mouse.create(canvas.elt);
     canvasmouse.pixelRatio = pixelDensity();
+
     var option = {
         mouse: canvasmouse,
     }
@@ -79,6 +72,15 @@ function mousePressed() {
     }
 }
 
+function keyTyped() {
+    if (key === '+') {
+        ThresholdDistance += 10;
+        console.log("test");
+    } else if (key === '-') {
+        ThresholdDistance -= 10;
+    }
+}
+
 function draw() {
     background(51);
     Engine.update(engine);
@@ -87,6 +89,15 @@ function draw() {
     }
     for (var i = 0; i < particles.length; i++) {
         particles[i].show();
+
+        // maybe do some kind of function for that, could look nicer?
+        line(particles[i].body.position.x ,particles[i].body.position.y, particles[i].body.accelerationX * 500, 500* particles[i].body.accelerationY);
+        stroke(255, 255, 255, 50);
+        fill(0, 150, 0, 25);
+        ellipse(particles[i].body.position.x, particles[i].body.position.y, ThresholdDistance * 2);
+        fill(255);
+        textSize(32);
+        text(ThresholdDistance, 440, 480);
     }
 
     if (mConstraint.body) {

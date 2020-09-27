@@ -1,8 +1,9 @@
+var ThresholdDistanceSq = ThresholdDistance * ThresholdDistance;
+
 function Particle(x, y, r, fixed, q) {
-    var TresholdDistance = 4000;
     var option = {
-        friction: 0,
-        frictionAir: 0.1,
+        friction: 0.1,
+        frictionAir: 0,
         restitution: 0.6,
         isStatic: fixed,
         charge: q,
@@ -19,20 +20,11 @@ function Particle(x, y, r, fixed, q) {
             },
             attractors: [
                 function(bodyA, bodyB) {
-                // var distance = ((bodyA.position.x - bodyB.position.x) ** 2 + (bodyA.position.y - bodyB.position.y) ** 2);
-                // var forceAngle = atan2((bodyB.position.y - bodyA.position.y) / (bodyB.position.x - bodyA.position.x));
-                //     var force = {
-                //         x: (bodyA.charge * bodyB.charge) / distance * cos(forceAngle) * 1e-6,
-                //         y: (bodyA.charge * bodyB.charge) / distance * sin(forceAngle) * 1e-6,
-                //     };
-                //     var force = {
-                //         x: (bodyA.charge * bodyB.charge) * (bodyA.position.x - bodyB.position.x) * 1e-6,
-                //         y: (bodyA.charge * bodyB.charge) * (bodyA.position.y - bodyB.position.y) * 1e-6,
-                //     };
                     var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
                         distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
                         normal = Matter.Vector.normalise(bToA)
-                        if (distanceSq < TresholdDistance) {
+
+                        if (distanceSq < ThresholdDistanceSq) {
                             magnitude = 0.05 * (bodyA.charge * bodyB.charge / distanceSq)
                         } else {
                             magnitude = 0
@@ -80,7 +72,7 @@ function Particle(x, y, r, fixed, q) {
         ellipse(0, 0, this.r*2);
         line(0, 0, this.r, 0);
         fill(255, 0, 0);
-        line(0,0, this.body.accelerationX * 500, 500* this.body.accelerationY)
+
         pop();
     }
 }
