@@ -22,6 +22,7 @@ var ground;
 
 // Particles are already created with a specific force and threshold, I can't update it ;(
 var ThresholdDistance = 100;
+var thresholdStatus = true;
 
 
 function setup() {
@@ -78,6 +79,9 @@ function keyTyped() {
         console.log("test");
     } else if (key === '-') {
         ThresholdDistance -= 10;
+    } else if (key === "t") {
+        thresholdStatus = !thresholdStatus;
+        console.log(thresholdStatus);
     }
 }
 
@@ -92,12 +96,15 @@ function draw() {
 
         // maybe do some kind of function for that, could look nicer?
         line(particles[i].body.position.x ,particles[i].body.position.y, particles[i].body.accelerationX * 500, 500* particles[i].body.accelerationY);
-        stroke(255, 255, 255, 50);
-        fill(0, 150, 0, 25);
-        ellipse(particles[i].body.position.x, particles[i].body.position.y, ThresholdDistance * 2);
+        if (thresholdStatus) {
+            stroke(255, 255, 255, 10);
+            fill(0, 150, 0, 1);
+            ellipse(particles[i].body.position.x, particles[i].body.position.y, ThresholdDistance * 2);
+        }
         fill(255);
         textSize(32);
         text(ThresholdDistance, 440, 480);
+        text(particles.length, 440, 25);
     }
 
     if (mConstraint.body) {

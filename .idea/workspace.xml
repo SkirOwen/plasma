@@ -24,7 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa6fa349-77a0-41cf-be5b-a47710b629c1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/particle.js" beforeDir="false" afterPath="$PROJECT_DIR$/particle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sketch.js" beforeDir="false" afterPath="$PROJECT_DIR$/sketch.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
